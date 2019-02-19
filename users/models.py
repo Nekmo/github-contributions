@@ -16,6 +16,16 @@ class GithubUser(models.Model):
     location = models.CharField(max_length=192, blank=True)
     email = models.EmailField(blank=True)
     bio = models.TextField(blank=True)
+    followers = models.ManyToManyField('self', through='Follower', symmetrical=False,
+                                       through_fields=('follower', 'following'))
+    following = models.ManyToManyField('self', through='Follower', symmetrical=False,
+                                       through_fields=('following', 'follower'))
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
     data = JSONField(default=dict)
+
+
+class Follower(models.Model):
+    follower = models.ForeignKey(GithubUser, on_delete=models.CASCADE)
+    following = models.ForeignKey(GithubUser, on_delete=models.CASCADE)
+    created_at = models.DateTimeField()
