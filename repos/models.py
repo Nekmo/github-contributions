@@ -7,6 +7,7 @@ from users.models import GithubUser
 
 
 class Repository(models.Model):
+    id = models.BigIntegerField(primary_key=True)
     user = models.ForeignKey(GithubUser, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     private = models.BooleanField()
