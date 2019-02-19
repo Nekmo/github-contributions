@@ -4,7 +4,7 @@ from django.db import models
 from jsonfield import JSONField
 
 
-class User(models.Model):
+class GithubUser(models.Model):
     avatar_id = models.URLField(blank=True)
     gravatar_id = models.URLField(blank=True)
     type = models.CharField(max_length=24)
