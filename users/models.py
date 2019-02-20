@@ -3,6 +3,8 @@ from django.db import models
 # Create your models here.
 from jsonfield import JSONField
 
+from repos.models import Repository
+
 
 class GithubUser(models.Model):
     id = models.BigIntegerField(primary_key=True)
@@ -20,6 +22,7 @@ class GithubUser(models.Model):
                                        through_fields=('follower', 'following'))
     following = models.ManyToManyField('self', through='Follower', symmetrical=False,
                                        through_fields=('following', 'follower'))
+    stars = models.ManyToManyField(Repository, through='Star')
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
     data = JSONField(default=dict)
@@ -28,4 +31,10 @@ class GithubUser(models.Model):
 class Follower(models.Model):
     follower = models.ForeignKey(GithubUser, on_delete=models.CASCADE)
     following = models.ForeignKey(GithubUser, on_delete=models.CASCADE)
+    created_at = models.DateTimeField()
+
+
+class Star(models.Model):
+    user = models.ForeignKey(GithubUser, on_delete=models.CASCADE)
+    repo = models.ForeignKey(Repository, on_delete=models.CASCADE)
     created_at = models.DateTimeField()
