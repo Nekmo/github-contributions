@@ -22,7 +22,8 @@ class GithubUser(models.Model):
                                        through_fields=('follower', 'following'))
     following = models.ManyToManyField('self', through='Follower', symmetrical=False,
                                        through_fields=('following', 'follower'))
-    stars = models.ManyToManyField(Repository, through='Star')
+    stars = models.ManyToManyField(Repository, through='Star', related_name='stargazers')
+    forking = models.ManyToManyField(Repository, through='Fork', related_name='forks')
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
     data = JSONField(default=dict)
@@ -35,6 +36,12 @@ class Follower(models.Model):
 
 
 class Star(models.Model):
+    user = models.ForeignKey(GithubUser, on_delete=models.CASCADE)
+    repo = models.ForeignKey(Repository, on_delete=models.CASCADE)
+    created_at = models.DateTimeField()
+
+
+class Fork(models.Model):
     user = models.ForeignKey(GithubUser, on_delete=models.CASCADE)
     repo = models.ForeignKey(Repository, on_delete=models.CASCADE)
     created_at = models.DateTimeField()
