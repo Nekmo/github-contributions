@@ -81,6 +81,12 @@ class GithubUser(models.Model):
                 user=self, actor=actor, org=org, repo=repo, public=api_event.public,
                 created_at=api_event.created_at.replace(tzinfo=pytz.UTC)))
 
+    def update_followers(self):
+        for follower in self._get_remote_user().get_followers():
+            user = GithubUser.objects.get_or_retrieve(follower.login)
+            Follower.objects.get_or_create(follower=user, following=self,
+                                           defaults=dict(created_at=timezone.now()))
+
 
 class Follower(models.Model):
     follower = models.ForeignKey(GithubUser, on_delete=models.CASCADE, related_name='+')
