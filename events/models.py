@@ -3,7 +3,6 @@ from django.conf import settings
 from django.db import models
 
 # Create your models here.
-from github import NamedUser
 from jsonfield import JSONField
 
 from repos.models import Repository
@@ -11,12 +10,7 @@ from users.models import GithubUser
 
 
 class EventManager(models.Manager):
-    def update_events(self):
-        g = github.Github()
-        api_user: NamedUser = g.get_user(settings.GITHUB_USER)
-        for event in api_user.get_events():
-            actor = GithubUser.objects.get_or_retrieve(event.actor.login)
-            org = GithubUser.objects.get_or_retrieve(event.org.login)
+    pass
 
 
 class Event(models.Model):

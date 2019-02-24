@@ -67,6 +67,16 @@ class GithubUser(models.Model):
         self.synchronized_at = timezone.now()
         self.data = remote_user.raw_data
 
+    def update_events(self):
+        from events.models import Event
+        for api_event in self._get_remote_user().get_events():
+            actor = GithubUser.objects.get_or_retrieve(api_event.actor.login)
+            org = GithubUser.objects.get_or_retrieve(api_event.org.login)
+            repo = Repository.objects.get_or_retrieve()
+            Event(id=api_event.id, type=api_event.type, payload=api_event.payload,
+                  user=self, actor=actor, org=org, repo=repo, public=api_event.public,
+                  created_at=api_event.created_at).save()
+
 
 class Follower(models.Model):
     follower = models.ForeignKey(GithubUser, on_delete=models.CASCADE)

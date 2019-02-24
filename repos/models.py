@@ -5,14 +5,12 @@ from django.db import models
 from github.Repository import Repository as GHRepository
 from jsonfield import JSONField
 
-from users.models import GithubUser
-
 
 class RepositoryManager(models.Manager):
-    def get_or_retrieve(self, login):
-        queryset = self.filter(login=login)
+    def get_or_retrieve(self, id_):
+        queryset = self.filter(id=id_)
         if not queryset.exists():
-            user = Repository(login=login)
+            user = Repository(id=id_)
             user.synchronize()
             user.save()
             return user
@@ -21,7 +19,7 @@ class RepositoryManager(models.Manager):
 
 class Repository(models.Model):
     id = models.BigIntegerField(primary_key=True)
-    user = models.ForeignKey(GithubUser, on_delete=models.CASCADE)
+    user = models.ForeignKey('users.GithubUser', on_delete=models.CASCADE)
     owner = models.CharField(max_length=100)
     full_name = models.CharField(max_length=255)
     private = models.BooleanField()
@@ -47,6 +45,7 @@ class Repository(models.Model):
         return g.get_repo(self.id)
 
     def synchronize(self):
+        from users.models import GithubUser
         remote_repo = self._get_remote_repo()
         self.name = remote_repo.name
         self.full_name = remote_repo.full_name
