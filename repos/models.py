@@ -21,7 +21,7 @@ class RepositoryManager(models.Manager):
 
 class Repository(models.Model):
     id = models.BigIntegerField(primary_key=True)
-    owner = models.ForeignKey('users.GithubUser', on_delete=models.CASCADE)
+    owner = models.ForeignKey('users.GithubUser', on_delete=models.CASCADE, related_name='repositories')
     name = models.CharField(max_length=100)
     full_name = models.CharField(max_length=255)
     private = models.BooleanField()
@@ -68,3 +68,10 @@ class Repository(models.Model):
         self.mirror_url = remote_repo.mirror_url or ''
         self.data = remote_repo.raw_data
         self.owner = GithubUser.objects.get_or_retrieve(remote_repo.owner.login)
+
+    def update_stars(self):
+        from users.models import Star, GithubUser
+        for star in self._get_remote_repo().get_stargazers_with_dates():
+            user = GithubUser.objects.get_or_retrieve(star.user.login)
+            Star.objects.get_or_create(repo=self, user=user,
+                                       defaults=dict(created_at=star.starred_at.replace(tzinfo=pytz.UTC)))

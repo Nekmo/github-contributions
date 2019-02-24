@@ -12,3 +12,5 @@ class Command(BaseCommand):
         user.update_followers()
         user.update_following()
         user.update_repos()
+        for repository in user.repositories.all():
+            repository.update_stars()
