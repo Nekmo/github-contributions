@@ -4,6 +4,7 @@ from django.db import models
 
 # Create your models here.
 from github import NamedUser
+from jsonfield import JSONField
 
 from repos.models import Repository
 from users.models import GithubUser
@@ -15,11 +16,13 @@ class EventManager(models.Manager):
         api_user: NamedUser = g.get_user(settings.GITHUB_USER)
         for event in api_user.get_events():
             actor = GithubUser.objects.get_or_retrieve(event.actor.login)
+            org = GithubUser.objects.get_or_retrieve(event.org.login)
 
 
 class Event(models.Model):
     id = models.BigIntegerField(primary_key=True)
     type = models.CharField(max_length=32, db_index=True)
+    payload = JSONField(default=dict)
     api = models.CharField(max_length=32)
     user = models.ForeignKey(GithubUser, on_delete=models.CASCADE)
     actor = models.ForeignKey(GithubUser, on_delete=models.CASCADE)
