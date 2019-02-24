@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db import models
 
 # Create your models here.
+from django.utils import timezone
 from github.Repository import Repository as GHRepository
 from jsonfield import JSONField
 
@@ -75,3 +76,10 @@ class Repository(models.Model):
             user = GithubUser.objects.get_or_retrieve(star.user.login)
             Star.objects.get_or_create(repo=self, user=user,
                                        defaults=dict(created_at=star.starred_at.replace(tzinfo=pytz.UTC)))
+
+    def update_watchers(self):
+        from users.models import Watch, GithubUser
+        for watcher in self._get_remote_repo().get_watchers():
+            user = GithubUser.objects.get_or_retrieve(watcher.login)
+            Watch.objects.get_or_create(repo=self, user=user,
+                                        defaults=dict(created_at=timezone.now()))

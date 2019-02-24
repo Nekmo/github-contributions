@@ -14,3 +14,4 @@ class Command(BaseCommand):
         user.update_repos()
         for repository in user.repositories.all():
             repository.update_stars()
+            repository.update_watchers()
