@@ -77,9 +77,16 @@ class Repository(models.Model):
             Star.objects.get_or_create(repo=self, user=user,
                                        defaults=dict(created_at=star.starred_at.replace(tzinfo=pytz.UTC)))
 
-    def update_watchers(self):
+    def update_subscribers(self):
         from users.models import Watch, GithubUser
-        for watcher in self._get_remote_repo().get_watchers():
+        for watcher in self._get_remote_repo().get_subscribers():
             user = GithubUser.objects.get_or_retrieve(watcher.login)
             Watch.objects.get_or_create(repo=self, user=user,
                                         defaults=dict(created_at=timezone.now()))
+
+    def update_forks(self):
+        from users.models import Fork, GithubUser
+        for repo in self._get_remote_repo().get_forks():
+            user = GithubUser.objects.get_or_retrieve(repo.owner.login)
+            Fork.objects.get_or_create(user=user, repo=self,
+                                       defaults=dict(created_at=timezone.now()))
