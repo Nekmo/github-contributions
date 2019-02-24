@@ -14,7 +14,7 @@ class EventManager(models.Manager):
         g = github.Github()
         api_user: NamedUser = g.get_user(settings.GITHUB_USER)
         for event in api_user.get_events():
-            user = GithubUser.objects.get_or_retrieve(event.actor.login)
+            actor = GithubUser.objects.get_or_retrieve(event.actor.login)
 
 
 class Event(models.Model):

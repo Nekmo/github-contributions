@@ -2,6 +2,7 @@ import github
 from django.db import models
 
 # Create your models here.
+from django.utils import timezone
 from github import NamedUser
 from jsonfield import JSONField
 
@@ -10,10 +11,13 @@ from repos.models import Repository
 
 class GithubUserManager(models.Manager):
     def get_or_retrieve(self, login):
-        if not self.filter(login=login):
+        queryset = self.filter(login=login)
+        if not queryset.exists():
             user = GithubUser(login=login)
             user.synchronize()
-
+            user.save()
+            return user
+        return queryset.first()
 
 
 class GithubUser(models.Model):
@@ -37,6 +41,7 @@ class GithubUser(models.Model):
     watching = models.ManyToManyField(Repository, through='Watch', related_name='subscribers')
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
+    synchronized_at = models.DateTimeField()
     data = JSONField(default=dict)
 
     objects = GithubUserManager()
@@ -57,6 +62,9 @@ class GithubUser(models.Model):
         self.location = remote_user.location
         self.email = remote_user.email
         self.bio = remote_user.bio
+        self.created_at = remote_user.created_at
+        self.updated_at = remote_user.updated_at
+        self.synchronized_at = timezone.now()
         self.data = remote_user.raw_data
 
 
