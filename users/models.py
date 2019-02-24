@@ -1,9 +1,19 @@
+import github
 from django.db import models
 
 # Create your models here.
+from github import NamedUser
 from jsonfield import JSONField
 
 from repos.models import Repository
+
+
+class GithubUserManager(models.Manager):
+    def get_or_retrieve(self, login):
+        if not self.filter(login=login):
+            user = GithubUser(login=login)
+            user.synchronize()
+
 
 
 class GithubUser(models.Model):
@@ -11,7 +21,7 @@ class GithubUser(models.Model):
     avatar_id = models.URLField(blank=True)
     gravatar_id = models.URLField(blank=True)
     type = models.CharField(max_length=24)
-    login = models.CharField(max_length=128, db_index=True)
+    login = models.CharField(max_length=128, db_index=True, unique=True)
     name = models.CharField(max_length=128)
     company = models.CharField(max_length=128)
     blog = models.URLField(blank=True)
@@ -28,6 +38,26 @@ class GithubUser(models.Model):
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
     data = JSONField(default=dict)
+
+    objects = GithubUserManager()
+
+    def _get_remote_user(self) -> NamedUser:
+        g = github.Github()
+        return g.get_user(self.login)
+
+    def synchronize(self):
+        remote_user = self._get_remote_user()
+        self.id = remote_user.id
+        self.avatar_id = remote_user.avatar_id
+        self.gravatar_id = remote_user.gravatar_id
+        self.type = remote_user.type
+        self.name = remote_user.name
+        self.company = remote_user.company
+        self.blog = remote_user.blog
+        self.location = remote_user.location
+        self.email = remote_user.email
+        self.bio = remote_user.bio
+        self.data = remote_user.raw_data
 
 
 class Follower(models.Model):
