@@ -11,3 +11,4 @@ class Command(BaseCommand):
         user = GithubUser.objects.get_or_retrieve(settings.GITHUB_USER)
         user.update_followers()
         user.update_following()
+        user.update_repos()

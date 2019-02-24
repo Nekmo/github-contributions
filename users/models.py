@@ -93,6 +93,10 @@ class GithubUser(models.Model):
             Follower.objects.get_or_create(follower=self, following=user,
                                            defaults=dict(created_at=timezone.now()))
 
+    def update_repos(self):
+        for repo in self._get_remote_user().get_repos():
+            Repository.objects.get_or_retrieve(repo.id)
+
 
 class Follower(models.Model):
     follower = models.ForeignKey(GithubUser, on_delete=models.CASCADE, related_name='+')
