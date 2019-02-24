@@ -10,3 +10,4 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         user = GithubUser.objects.get_or_retrieve(settings.GITHUB_USER)
         user.update_followers()
+        user.update_following()
