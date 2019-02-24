@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             name='Repository',
             fields=[
                 ('id', models.BigIntegerField(primary_key=True, serialize=False)),
-                ('owner', models.CharField(max_length=100)),
+                ('name', models.CharField(max_length=100)),
                 ('full_name', models.CharField(max_length=255)),
                 ('private', models.BooleanField()),
                 ('description', models.TextField(blank=True)),

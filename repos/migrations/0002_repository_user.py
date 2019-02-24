@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='repository',
-            name='user',
+            name='owner',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='users.GithubUser'),
         ),
     ]

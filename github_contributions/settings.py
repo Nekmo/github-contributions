@@ -126,3 +126,4 @@ STATIC_URL = '/static/'
 
 
 GITHUB_USER = 'nekmo'
+GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')

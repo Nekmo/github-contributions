@@ -1,4 +1,6 @@
 import github
+import pytz
+from django.conf import settings
 from django.db import models
 
 # Create your models here.
@@ -19,8 +21,8 @@ class RepositoryManager(models.Manager):
 
 class Repository(models.Model):
     id = models.BigIntegerField(primary_key=True)
-    user = models.ForeignKey('users.GithubUser', on_delete=models.CASCADE)
-    owner = models.CharField(max_length=100)
+    owner = models.ForeignKey('users.GithubUser', on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
     full_name = models.CharField(max_length=255)
     private = models.BooleanField()
     description = models.TextField(blank=True)
@@ -41,7 +43,7 @@ class Repository(models.Model):
     objects = RepositoryManager()
 
     def _get_remote_repo(self) -> GHRepository:
-        g = github.Github()
+        g = github.Github(settings.GITHUB_USER, settings.GITHUB_TOKEN)
         return g.get_repo(self.id)
 
     def synchronize(self):
@@ -51,18 +53,18 @@ class Repository(models.Model):
         self.full_name = remote_repo.full_name
         self.full_name = remote_repo.full_name
         self.private = remote_repo.private
-        self.description = remote_repo.description
+        self.description = remote_repo.description or ''
         self.default_branch = remote_repo.default_branch
         self.fork = remote_repo.fork
-        self.homepage = remote_repo.homepage
-        self.created_at = remote_repo.created_at
-        self.updated_at = remote_repo.updated_at
+        self.homepage = remote_repo.homepage or ''
+        self.created_at = remote_repo.created_at.replace(tzinfo=pytz.UTC)
+        self.updated_at = remote_repo.updated_at.replace(tzinfo=pytz.UTC)
         self.has_issues = remote_repo.has_issues
         self.has_projects = remote_repo.has_projects
         self.has_wiki = remote_repo.has_wiki
         self.has_pages = False  # TODO: not available
         self.has_downloads = remote_repo.has_downloads
         self.archived = remote_repo.archived
-        self.mirror_url = remote_repo.mirror_url
+        self.mirror_url = remote_repo.mirror_url or ''
         self.data = remote_repo.raw_data
         self.owner = GithubUser.objects.get_or_retrieve(remote_repo.owner.login)

@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
             name='GithubUser',
             fields=[
                 ('id', models.BigIntegerField(primary_key=True, serialize=False)),
-                ('avatar_id', models.URLField(blank=True)),
+                ('avatar_url', models.URLField(blank=True)),
                 ('gravatar_id', models.URLField(blank=True)),
                 ('type', models.CharField(max_length=24)),
                 ('login', models.CharField(db_index=True, max_length=128, unique=True)),
