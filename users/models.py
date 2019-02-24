@@ -32,9 +32,8 @@ class GithubUser(models.Model):
     location = models.CharField(max_length=192, blank=True)
     email = models.EmailField(blank=True)
     bio = models.TextField(blank=True)
-    followers = models.ManyToManyField('self', through='Follower', symmetrical=False,
-                                       through_fields=('follower', 'following'))
     following = models.ManyToManyField('self', through='Follower', symmetrical=False,
+                                       related_name='followers',
                                        through_fields=('following', 'follower'))
     stars = models.ManyToManyField(Repository, through='Star', related_name='stargazers')
     forking = models.ManyToManyField(Repository, through='Fork', related_name='forks')
@@ -79,24 +78,24 @@ class GithubUser(models.Model):
 
 
 class Follower(models.Model):
-    follower = models.ForeignKey(GithubUser, on_delete=models.CASCADE)
-    following = models.ForeignKey(GithubUser, on_delete=models.CASCADE)
+    follower = models.ForeignKey(GithubUser, on_delete=models.CASCADE, related_name='+')
+    following = models.ForeignKey(GithubUser, on_delete=models.CASCADE, related_name='+')
     created_at = models.DateTimeField()
 
 
 class Star(models.Model):
-    user = models.ForeignKey(GithubUser, on_delete=models.CASCADE)
-    repo = models.ForeignKey(Repository, on_delete=models.CASCADE)
+    user = models.ForeignKey(GithubUser, on_delete=models.CASCADE, related_name='+')
+    repo = models.ForeignKey(Repository, on_delete=models.CASCADE, related_name='+')
     created_at = models.DateTimeField()
 
 
 class Fork(models.Model):
-    user = models.ForeignKey(GithubUser, on_delete=models.CASCADE)
-    repo = models.ForeignKey(Repository, on_delete=models.CASCADE)
+    user = models.ForeignKey(GithubUser, on_delete=models.CASCADE, related_name='+')
+    repo = models.ForeignKey(Repository, on_delete=models.CASCADE, related_name='+')
     created_at = models.DateTimeField()
 
 
 class Watch(models.Model):
-    user = models.ForeignKey(GithubUser, on_delete=models.CASCADE)
-    repo = models.ForeignKey(Repository, on_delete=models.CASCADE)
+    user = models.ForeignKey(GithubUser, on_delete=models.CASCADE, related_name='+')
+    repo = models.ForeignKey(Repository, on_delete=models.CASCADE, related_name='+')
     created_at = models.DateTimeField()
