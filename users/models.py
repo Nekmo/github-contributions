@@ -99,6 +99,9 @@ class GithubUser(models.Model):
 
 
 class Follower(models.Model):
+    """TODO: this event is not fired: https://developer.github.com/v3/activity/events/types/
+    A manual sync is required.
+    """
     follower = models.ForeignKey(GithubUser, on_delete=models.CASCADE, related_name='+')
     following = models.ForeignKey(GithubUser, on_delete=models.CASCADE, related_name='+')
     created_at = models.DateTimeField()
