@@ -9,7 +9,15 @@ from github.Repository import Repository as GHRepository
 from jsonfield import JSONField
 
 
+class RepositoryQuerySet(models.QuerySet):
+    def own(self):
+        return self.filter(owner__login=settings.GITHUB_USER)
+
+
 class RepositoryManager(models.Manager):
+    def get_queryset(self):
+        return RepositoryQuerySet(self.model, using=self._db)
+
     def get_or_retrieve(self, id_):
         queryset = self.filter(id=id_)
         if not queryset.exists():
@@ -18,6 +26,14 @@ class RepositoryManager(models.Manager):
             user.save()
             return user
         return queryset.first()
+
+    def own(self):
+        return self.get_queryset().own()
+
+
+class PublicRepositoryManager(RepositoryManager):
+    def get_queryset(self):
+        return super().get_queryset().filter(private=False)
 
 
 class Repository(models.Model):
@@ -42,6 +58,7 @@ class Repository(models.Model):
     data = JSONField(default=dict)
 
     objects = RepositoryManager()
+    publics = PublicRepositoryManager()
 
     def _get_remote_repo(self) -> GHRepository:
         g = github.Github(settings.GITHUB_USER, settings.GITHUB_TOKEN)

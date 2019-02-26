@@ -67,6 +67,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'github_contributions.context_processors.count_models',
             ],
         },
     },
@@ -125,5 +126,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
-GITHUB_USER = 'nekmo'
+GITHUB_USER = 'Nekmo'
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
