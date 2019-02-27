@@ -9,8 +9,20 @@ from repos.models import Repository
 from users.models import GithubUser
 
 
+class EventQuerySet(models.QuerySet):
+    def push_events(self):
+        return self.filter(type='PushEvent')
+
+
 class EventManager(models.Manager):
-    pass
+    def get_queryset(self):
+        return EventQuerySet(self.model, using=self._db)
+
+    def push_events(self):
+        # TODO: para contar los commits, https://developer.github.com/v3/activity/events/types/#pushevent
+        # podría crearse un "fake event" llamado commitEvent. Otra opción es utilizar de alguna manera el
+        # "size" del payload. También debería añadirse "action" para otros payloads.
+        return self.get_queryset().push_events()
 
 
 class Event(models.Model):

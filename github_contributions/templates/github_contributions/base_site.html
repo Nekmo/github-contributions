@@ -50,11 +50,24 @@
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
-        <div class="container">
-            <h1 class="display-3">Nekmo.com</h1>
-            <p>This is a template for a simple marketing or informational website. It includes a large callout
-                called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-            <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+        <div class="container d-flex flex-row">
+            <div class="d-flex flex-fill">
+                <h1 class="display-3">Nekmo on Github</h1>
+            </div>
+
+{#            <p>This is a template for a simple marketing or informational website. It includes a large callout#}
+{#                called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>#}
+{#            <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>#}
+            <div>
+                <div>
+                    <div class="display-4">10 commits</div>
+                    <div>in the last 7 days</div>
+                </div>
+{#                <div>20 stars in the last 7 days</div>#}
+{#                <div>5 followers in the last 7 days</div>#}
+{#                <div>2 watchers in the last 7 days</div>#}
+{#                <div>1 fork in the last 7 days</div>#}
+            </div>
         </div>
     </div>
 
@@ -88,6 +101,7 @@
     <p>&copy; Company 2017-2018</p>
 </footer>
 
-
+<script src="{% static 'github_contributions/dist/vendors~home~repositories.js' %}"></script>
+<script src="{% static 'github_contributions/dist/home.js' %}"></script>
 </body>
 </html>
