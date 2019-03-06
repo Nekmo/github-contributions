@@ -1,6 +1,6 @@
 // FIXME: re-examine organization of variables, files, ordering etc.  While the ordering works, we need to be sure this is more comprehensible.
-@import "../node_modules/bootstrap-material-design/scss/variables/colors";
-@import "../node_modules/bootstrap-material-design/scss/variables/shadow";
+@import "../../node_modules/bootstrap-material-design/scss/variables/colors";
+@import "../../node_modules/bootstrap-material-design/scss/variables/shadow";
 
 // redefine ? TODO: do we need this bmd variant?  This is used as $body-color
 $gray-lighter: rgba($black, 0.12) !default;
@@ -32,35 +32,35 @@ $theme-colors: map-merge((
 ), $theme-colors);
 
 // Customized BS variables
-@import "../node_modules/bootstrap-material-design/scss/variables/bootstrap/components";
-@import "../node_modules/bootstrap-material-design/scss/variables/bootstrap/custom-forms";
-@import "../node_modules/bootstrap-material-design/scss/variables/bootstrap/spacing";
-@import "../node_modules/bootstrap-material-design/scss/variables/bootstrap/body";
-@import "../node_modules/bootstrap-material-design/scss/variables/bootstrap/buttons";
-@import "../node_modules/bootstrap-material-design/scss/variables/bootstrap/card";
-@import "../node_modules/bootstrap-material-design/scss/variables/bootstrap/code";
-@import "../node_modules/bootstrap-material-design/scss/variables/bootstrap/dropdown";
-@import "../node_modules/bootstrap-material-design/scss/variables/bootstrap/forms";
-@import "../node_modules/bootstrap-material-design/scss/variables/bootstrap/list-group";
-@import "../node_modules/bootstrap-material-design/scss/variables/bootstrap/nav";
-@import "../node_modules/bootstrap-material-design/scss/variables/bootstrap/pagination";
-@import "../node_modules/bootstrap-material-design/scss/variables/bootstrap/state";
-@import "../node_modules/bootstrap-material-design/scss/variables/bootstrap/tables";
-@import "../node_modules/bootstrap-material-design/scss/variables/bootstrap/tooltip";
-@import "../node_modules/bootstrap-material-design/scss/variables/bootstrap/type";
-@import "../node_modules/bootstrap-material-design/scss/variables/bootstrap/modals";
+@import "../../node_modules/bootstrap-material-design/scss/variables/bootstrap/components";
+@import "../../node_modules/bootstrap-material-design/scss/variables/bootstrap/custom-forms";
+@import "../../node_modules/bootstrap-material-design/scss/variables/bootstrap/spacing";
+@import "../../node_modules/bootstrap-material-design/scss/variables/bootstrap/body";
+@import "../../node_modules/bootstrap-material-design/scss/variables/bootstrap/buttons";
+@import "../../node_modules/bootstrap-material-design/scss/variables/bootstrap/card";
+@import "../../node_modules/bootstrap-material-design/scss/variables/bootstrap/code";
+@import "../../node_modules/bootstrap-material-design/scss/variables/bootstrap/dropdown";
+@import "../../node_modules/bootstrap-material-design/scss/variables/bootstrap/forms";
+@import "../../node_modules/bootstrap-material-design/scss/variables/bootstrap/list-group";
+@import "../../node_modules/bootstrap-material-design/scss/variables/bootstrap/nav";
+@import "../../node_modules/bootstrap-material-design/scss/variables/bootstrap/pagination";
+@import "../../node_modules/bootstrap-material-design/scss/variables/bootstrap/state";
+@import "../../node_modules/bootstrap-material-design/scss/variables/bootstrap/tables";
+@import "../../node_modules/bootstrap-material-design/scss/variables/bootstrap/tooltip";
+@import "../../node_modules/bootstrap-material-design/scss/variables/bootstrap/type";
+@import "../../node_modules/bootstrap-material-design/scss/variables/bootstrap/modals";
 
 // import their vars after customization for use below
 $enable-flex: true; // fully adopt flexbox layouts
 $enable-shadows: true; // enable shadows, set to false to turn off shadows
-@import "../node_modules/bootstrap/scss/functions"; // from bootstrap node_module
-@import "../node_modules/bootstrap/scss/variables"; // from bootstrap node_module
+@import "../../node_modules/bootstrap/scss/functions"; // from bootstrap node_module
+@import "../../node_modules/bootstrap/scss/variables"; // from bootstrap node_module
 
 //
-@import "../node_modules/bootstrap-material-design/scss/variables/layout";
-@import "../node_modules/bootstrap-material-design/scss/variables/menu";
-@import "../node_modules/bootstrap-material-design/scss/variables/drawer";
-@import "../node_modules/bootstrap-material-design/scss/variables/snackbar";
+@import "../../node_modules/bootstrap-material-design/scss/variables/layout";
+@import "../../node_modules/bootstrap-material-design/scss/variables/menu";
+@import "../../node_modules/bootstrap-material-design/scss/variables/drawer";
+@import "../../node_modules/bootstrap-material-design/scss/variables/snackbar";
 
 $bmd-label-color-focus: theme-color(primary) !default;
 $bmd-invalid-underline: $red-a700 !default;

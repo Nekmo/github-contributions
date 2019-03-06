@@ -1,18 +1,21 @@
-import {PolymerElement, html} from '@polymer/polymer';
-import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
-import {NeonAnimatableBehavior} from '@polymer/neon-animation/neon-animatable-behavior.js';
 
-class SampleElement extends mixinBehaviors([NeonAnimatableBehavior], PolymerElement) {
-  static get template() {
-    return html`
-      <style>
-        :host {
-          display: block;
-        }
-      </style>
 
-      <slot></slot>
-    `;
-  }
+function fadeSlideItems(element: any, i: number = null) {
+    let len = element.children.length;
+    if(i === null) {
+        Array.from(element.children).forEach((el: HTMLElement) => { el.classList.add('hide') });
+        i = 0;
+    } else {
+        element.children[i].classList.add('hide');
+    }
+    i++;
+    element.children[i % len].classList.remove('hide');
+    element.children[i % len].classList.add('elementToFadeInAndOut');
+    setTimeout(() => fadeSlideItems(element, i % len), 8000);
 }
-customElements.define('sample-element', SampleElement);
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    let elements: any = document.getElementsByClassName('fade-slide');
+    Array.from(elements).forEach((el) => { fadeSlideItems(el) });
+});

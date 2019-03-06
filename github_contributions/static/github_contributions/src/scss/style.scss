@@ -1,1 +1,21 @@
 @import "material_core";
+
+.elementToFadeInAndOut {
+    -webkit-animation: fadeinout 8s linear forwards;
+    animation: fadeinout 8s linear forwards;
+}
+
+@-webkit-keyframes fadeinout {
+    0%,100% { opacity: 0; }
+    20%, 80% { opacity: 1; }
+}
+
+@keyframes fadeinout {
+    0%,100% { opacity: 0; }
+    20%, 80% { opacity: 1; }
+}
+
+
+.hide {
+    display: none;
+}
