@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.views.generic import TemplateView
 
 from events.models import Event
-from users.models import Star, Follower, Watch
+from users.models import Star, Follower, Watch, Fork
 
 
 class IndexView(TemplateView):
@@ -17,6 +17,7 @@ class IndexView(TemplateView):
             stars_count=Star.objects.filter(**counters_filter).own().count(),
             followers_count=Follower.objects.filter(**counters_filter).own().count(),
             watchers_count=Watch.objects.filter(**counters_filter).own().count(),
+            forks_count=Fork.objects.filter(**counters_filter).own().count(),
         )
         return dict(
             counters,

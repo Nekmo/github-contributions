@@ -61,6 +61,19 @@ class WatchManager(models.Manager):
         return self.get_queryset().own()
 
 
+class ForkQuerySet(models.QuerySet):
+    def own(self):
+        return self.filter(repo__owner__login=settings.GITHUB_USER)
+
+
+class ForkManager(models.Manager):
+    def get_queryset(self):
+        return ForkQuerySet(self.model, using=self._db)
+
+    def own(self):
+        return self.get_queryset().own()
+
+
 class GithubUser(models.Model):
     id = models.BigIntegerField(primary_key=True)
     avatar_url = models.URLField(blank=True)
@@ -160,6 +173,8 @@ class Fork(models.Model):
     user = models.ForeignKey(GithubUser, on_delete=models.CASCADE, related_name='+')
     repo = models.ForeignKey(Repository, on_delete=models.CASCADE, related_name='+')
     created_at = models.DateTimeField()
+
+    objects = ForkManager()
 
 
 class Watch(models.Model):
