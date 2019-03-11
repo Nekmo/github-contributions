@@ -22,6 +22,32 @@ class GithubUserManager(models.Manager):
         return queryset.first()
 
 
+class StarQuerySet(models.QuerySet):
+    def own(self):
+        return self.filter(repo__owner__login=settings.GITHUB_USER)
+
+
+class StarManager(models.Manager):
+    def get_queryset(self):
+        return StarQuerySet(self.model, using=self._db)
+
+    def own(self):
+        return self.get_queryset().own()
+
+
+class FollowerQuerySet(models.QuerySet):
+    def own(self):
+        return self.filter(following__login=settings.GITHUB_USER)
+
+
+class FollowerManager(models.Manager):
+    def get_queryset(self):
+        return FollowerQuerySet(self.model, using=self._db)
+
+    def own(self):
+        return self.get_queryset().own()
+
+
 class GithubUser(models.Model):
     id = models.BigIntegerField(primary_key=True)
     avatar_url = models.URLField(blank=True)
@@ -106,17 +132,22 @@ class Follower(models.Model):
     following = models.ForeignKey(GithubUser, on_delete=models.CASCADE, related_name='+')
     created_at = models.DateTimeField()
 
+    objects = FollowerManager()
+
 
 class Star(models.Model):
     user = models.ForeignKey(GithubUser, on_delete=models.CASCADE, related_name='+')
     repo = models.ForeignKey(Repository, on_delete=models.CASCADE, related_name='+')
     created_at = models.DateTimeField()
 
+    objects = StarManager()
+
 
 class Fork(models.Model):
     user = models.ForeignKey(GithubUser, on_delete=models.CASCADE, related_name='+')
     repo = models.ForeignKey(Repository, on_delete=models.CASCADE, related_name='+')
     created_at = models.DateTimeField()
+
 
 
 class Watch(models.Model):

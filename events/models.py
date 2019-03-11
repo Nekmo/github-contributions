@@ -13,6 +13,9 @@ class EventQuerySet(models.QuerySet):
     def push_events(self):
         return self.filter(type='PushEvent')
 
+    def star_events(self):
+        return self.filter(type='WatchEvent')
+
 
 class EventManager(models.Manager):
     def get_queryset(self):
@@ -23,6 +26,9 @@ class EventManager(models.Manager):
         # podría crearse un "fake event" llamado commitEvent. Otra opción es utilizar de alguna manera el
         # "size" del payload. También debería añadirse "action" para otros payloads.
         return self.get_queryset().push_events()
+
+    def star_events(self):
+        return self.get_queryset().star_events()
 
 
 class Event(models.Model):

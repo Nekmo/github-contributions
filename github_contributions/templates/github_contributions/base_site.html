@@ -61,9 +61,9 @@
             <div>
                 <div>
                     <div class="fade-slide display-4">
-                        <div>10 commits</div>
-                        <div>20 stars</div>
-                        <div>5 followers</div>
+                        <div>x commits</div>
+                        {% if stars_count %}<div>{{ stars_count }} stars</div>{% endif %}
+                        {% if followers_count %}<div>{{ followers_count }} followers</div>{% endif %}
                         <div>2 watchers</div>
                         <div>1 fork</div>
                     </div>
