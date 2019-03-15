@@ -45,3 +45,9 @@ class Event(models.Model):
     created_at = models.DateTimeField()
 
     objects = EventManager()
+
+    def parse_event(self):
+        from events.parsers import EVENT_TYPES
+        if self.type not in EVENT_TYPES:
+            return
+        EVENT_TYPES[self.type](self).parse()
