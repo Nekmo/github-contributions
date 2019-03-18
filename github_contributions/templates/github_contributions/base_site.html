@@ -77,16 +77,30 @@
     <div class="container">
         <!-- Example row of columns -->
         <div class="row">
-            <div class="col-md-4">
-                <h2>Heading</h2>
-                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+            <div class="col-md-8">
+
+                <div class="results">
+                  <div class="js-heatmap"></div>
+                  <div class="js-months"></div>
+                  <div class="js-legend"></div>
+                  <div class="js-empty  hidden  center">
+                    <h4>Oops!</h4>
+                    <img src="assets/404.gif" style="width:400px;height:300px"></img>
+                  </div>
+                  <div class="js-spinner  loader  hidden"></div>
+                </div>
+
             </div>
-            <div class="col-md-4">
-                <h2>Heading</h2>
-                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-            </div>
+{#            <div class="col-md-4">#}
+{#                <h2>Heading</h2>#}
+{#                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>#}
+{#                <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>#}
+{#            </div>#}
+{#            <div class="col-md-4">#}
+{#                <h2>Heading</h2>#}
+{#                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>#}
+{#                <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>#}
+{#            </div>#}
             <div class="col-md-4">
                 <h2>Heading</h2>
                 <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
@@ -103,9 +117,14 @@
 <footer class="container">
     <p>&copy; Company 2017-2018</p>
 </footer>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/d3/4.4.0/d3.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script src="{% static 'github_contributions/dist/vendors~home~repositories.js' %}"></script>
 <script src="{% static 'github_contributions/dist/vendors~home.js' %}"></script>
 <script src="{% static 'github_contributions/dist/home.js' %}"></script>
+
+
 </body>
 </html>

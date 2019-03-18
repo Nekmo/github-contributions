@@ -1,3 +1,5 @@
 Django
 jsonfield
 PyGithub
+djangorestframework
+django-filter

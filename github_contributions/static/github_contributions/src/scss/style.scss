@@ -19,3 +19,80 @@
 .hide {
     display: none;
 }
+
+
+
+
+///////////////////////
+
+:root{
+  --main-color:#06c;
+}
+
+body {
+  shape-rendering: crispEdges;
+}
+
+.day {
+  fill: #eee;
+  stroke: #fff;
+  stroke-width: 3px;
+}
+
+.color0 { fill: #d6e685 }
+.color1 { fill: #44a340 }
+.color2 { fill: #28752d }
+.color3 { fill: #1e6823 }
+.color4 { fill: #365e2f }
+.color5 { fill: #144e12 }
+
+.hidden { display: none; }
+
+
+.results {
+  width: 800px;
+  display: block;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.center {
+  text-align: center;
+  display: inherit;
+}
+
+.checkbox {
+  margin-top: 5px;
+}
+
+@-webkit-keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.github-stars {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-top: 20px;
+  width: 110px;
+  height: 20px;
+}
