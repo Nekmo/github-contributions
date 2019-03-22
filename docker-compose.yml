@@ -1,0 +1,13 @@
+
+version: '2'
+services:
+
+  postgres:
+    image: postgres
+    restart: always
+
+    volumes:
+      - ./data/postgres/data:/var/lib/postgresql/data
+
+    environment:
+      POSTGRES_PASSWORD: RMRSsvBbEehPXqhr4SRphWaK
