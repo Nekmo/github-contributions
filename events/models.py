@@ -33,7 +33,7 @@ class EventManager(models.Manager):
 
 class Event(models.Model):
     id = models.BigAutoField(primary_key=True)
-    event_id = models.BigIntegerField(unique=True, blank=True, null=True)
+    event_id = models.CharField(max_length=120, db_index=True)
     type = models.CharField(max_length=32, db_index=True)
     payload = JSONField(default=dict)
     api = models.CharField(max_length=32)

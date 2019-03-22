@@ -3,3 +3,4 @@ jsonfield
 PyGithub
 djangorestframework
 django-filter
+psycopg2
